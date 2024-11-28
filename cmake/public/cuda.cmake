@@ -136,6 +136,8 @@ if(CUDA_NVRTC_LIB AND NOT CUDA_NVRTC_SHORTHASH)
     "import hashlib;hash=hashlib.sha256();hash.update(open('${CUDA_NVRTC_LIB}','rb').read());print(hash.hexdigest()[:8])"
     RESULT_VARIABLE _retval
     OUTPUT_VARIABLE CUDA_NVRTC_SHORTHASH)
+  message(STATUS "Python_EXECUTABLE=(${Python_EXECUTABLE}); Python_INTERPRETER=(${Python_INTERPRETER}); _retval=${_retval}. CUDA_NVRTC_LIB=${CUDA_NVRTC_LIB}")
+
   if(NOT _retval EQUAL 0)
     message(WARNING "Failed to compute shorthash for libnvrtc.so")
     set(CUDA_NVRTC_SHORTHASH "XXXXXXXX")
