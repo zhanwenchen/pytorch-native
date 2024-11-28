@@ -130,11 +130,11 @@ endif()
 # find lbnvrtc.so
 set(CUDA_NVRTC_LIB "${CUDA_nvrtc_LIBRARY}" CACHE FILEPATH "")
 if(CUDA_NVRTC_LIB AND NOT CUDA_NVRTC_SHORTHASH)
-  find_package(Python COMPONENTS Interpreter)
+  find_package(Python COMPONENTS Interpreter REQUIRED)
   execute_process(
-    COMMAND Python::Interpreter -c
-    "import hashlib;hash=hashlib.sha256();print(f'CUDA_NVRTC_LIB=${CUDA_NVRTC_LIB}')"
-    # "import hashlib;hash=hashlib.sha256();print(f'${CUDA_NVRTC_LIB}');hash.update(open('${CUDA_NVRTC_LIB}','rb').read());print(hash.hexdigest()[:8])"
+    COMMAND ${Python_EXECUTABLE} -c
+    # "import hashlib;hash=hashlib.sha256();print(f'CUDA_NVRTC_LIB=${CUDA_NVRTC_LIB}')"
+    "import hashlib;hash=hashlib.sha256();hash.update(open('${CUDA_NVRTC_LIB}','rb').read());print(hash.hexdigest()[:8])"
     RESULT_VARIABLE _retval
     OUTPUT_VARIABLE CUDA_NVRTC_SHORTHASH)
   message(STATUS "Python_EXECUTABLE=(${Python_EXECUTABLE}); Python_INTERPRETER=(${Python_INTERPRETER}); _retval=${_retval}. CUDA_NVRTC_LIB=${CUDA_NVRTC_LIB}")
